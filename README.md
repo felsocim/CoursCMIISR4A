@@ -20,7 +20,7 @@ Les résumés des autres matières seront publiés dès que les documents relati
 
 ## Dégagement de responsabilités
 
-L'auteurs des résumés de cours disponibles dans ce répertoire n'est en aucune façon responsable de l'exactitude des informations constituant ces résumés de cours.
+L'auteur des résumés de cours disponibles dans ce répertoire n'est en aucune façon responsable de l'exactitude des informations constituant ces résumés de cours. 
 
 ## Questions et suggestions
 
