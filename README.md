@@ -16,6 +16,7 @@ Vous trouverez les informations liées aux auteurs respectifs dans chaque docume
 
 > * Algorithmes distribués
 > * Complexité et calculabilité
+> * Compilation
 
 Les résumés des autres matières seront publiés dès que les documents relatifs seront mis en forme.
 
