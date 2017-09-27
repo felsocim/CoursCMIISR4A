@@ -8,15 +8,15 @@ Mise en forme par [Marek Felsoci](mailto:marek.felsoci@etu.unistra.fr).
 
 **ATTENTION !** L'USAGE DE CE RÉSUMÉ DE COURS NE PEUT ÊTRE QU'ACADÉMIQUE.
 
-## 1 Machines de Turing
+## Machines de Turing
 
-### 1.1 Contrôle avec un nombre fini d'états
+### Contrôle avec un nombre fini d'états
 
 Les machines de Turing utilisent une bande ordonnée avec un début mais sans fin où on peut lire, écrire et se déplacer.
 
 ![Exemple d'une machine de Turing](images/machine_turing_exemple.png)
 
-### 1.2 Mécanisme
+### Mécanisme
 
 En fonction de l'état du contrôle et du contenu de la case où se trouve la tête de lecture :
 
@@ -32,7 +32,7 @@ L'alphabet fini &Sigma; utilisé par l'automate contient :
 
 Souvent l'alphabet &Sigma;<sub>0</sub> en entrée/sortie &supe; &Sigma;. Les symboles &rarr; et &larr; codant le déplacement d'une case à droite respectivement à gauche n'appartiennent pas à &Sigma;.
 
-### 1.3 Définition formelle
+### Définition formelle
 
 Une machine de Turing est un quintuplet (K, &Sigma;, &delta;, s, H) tel que :
 
@@ -42,14 +42,14 @@ Une machine de Turing est un quintuplet (K, &Sigma;, &delta;, s, H) tel que :
 * &Sigma; est un alphabet fini tel que {&#9655;, &#8852;} &isin; &Sigma; et {&rarr;, &larr;} &notin; &Sigma;
 * &delta; est une transition qui correspond à (K - H) &times; &Sigma; &rarr; K &times; (&Sigma; &cup; {&rarr;, &larr;}) se traduisant par (q, a) &#8614; (p, b) où q &isin; (K - H), a &isin; &Sigma;, p &isin; K et b &isin; (&Sigma; &cup; {&rarr;, &larr;})
 
-### 1.4 Contraintes
+### Contraintes
 
 Soit &delta; une transition telle que &delta;(q, a) = (p, b).
 
 * Si a = &#9655; alors b = &rarr;.
 * Si a &ne; &#9655; alors b &ne; &#9655;.
 
-### Example
+***Example***
 
 Une machine de Turing effaçant la bande serait définie comme suit :
 
@@ -68,7 +68,7 @@ H = {h}
 | q<sub>1</sub> | &#8852; | (q<sub>0</sub>, &rarr;) |
 | q<sub>1</sub> | a | (q<sub>0</sub>, a) |
 
-### 1.5 Configuration
+### Configuration
 
 Une configuration représente un couple composé de l'état et le contenu de la bande avec la position de la tête de lecture. Dans la notation (q, &#9655;&#8852; **m** o t) q représente l'état, &laquo; &#9655;&#8852; **m** o t &raquo; est le contenu de la bande jusqu'au dernier symbole différent de blanc et la tête de lecture est positionnée sur **m**.
 
@@ -82,7 +82,7 @@ Il est également possible d'utiliser un triplet (q, w, u) pour décrire une con
 
 **Exemples :** (q, &#9655;&#8852; **m** o t) &hArr; (q, &#9655;&#8852; **m**, o t), (q, &#9655;&#8852; m o t &#8852; **&#8852;**) &hArr; (q, &#9655;&#8852; m o t &#8852; &#8852;, &epsilon;)
 
-### 1.6 Transitions de configuration
+### Transitions de configuration
 
 Notons (q<sub>1</sub>, w<sub>1</sub>, a<sub>1</sub>, u<sub>1</sub>) &#8866;<sub>M</sub> (q<sub>2</sub>, w<sub>2</sub>, a<sub>2</sub>, u<sub>2</sub>) la transition de configuration entre deux états d'une machine de Turing *M* où q<sub>1</sub> &isin; K - H et &delta;(q<sub>1</sub>, a<sub>1</sub>) = (q<sub>2</sub>, b).
 
@@ -100,11 +100,11 @@ La fermeture transitive de configurations &#8866;<sub>M</sub><sup>+</sup> signif
 
 D'autre part la fermeture réflexive et transitive de configurations &#8866;<sub>M</sub><sup>\*</sup> signifie qu'il est possible de passer de celle de gauche à celle de droite en un nombre *n* &ge; 0 de transitions.
 
-### 1.7 Composition
+### Composition
 
 Une machine de Turing peut être contruite à partir des machines de Turing de base.
 
-#### 1.7.1 Machines de Turing de base
+#### Machines de Turing de base
 
 Soit M<sub>a</sub> une machine de Turing de base telle que :
 
@@ -117,9 +117,9 @@ M<sub>a</sub> est alors une machine qui écrit la lettre *a* sur la bande.
 
 Dans la suite on outilisera les abbréviations M<sub>&rarr;</sub> et M<sub>&larr;</sub> pour noter les machines de Turing qui déplacent la tête de lecture d'un cran à droite respectivement à gauche sur la bande.
 
-#### 1.7.2 Combinaisons
+#### Combinaisons
 
-##### Exemple
+***Exemple***
 
 ![Combinaison de machines de Turing](images/machine_turing_composee.png)
 
@@ -127,7 +127,7 @@ Dans la suite on outilisera les abbréviations M<sub>&rarr;</sub> et M<sub>&larr
 * Si M<sub>1</sub> se termine avec *a* sur la tête alors on va sur M<sub>2</sub>.
 * Si M<sub>1</sub> se termine avec *b* sur la tête alors on va sur M<sub>3</sub>.
 
-##### Définition formelle
+***Définition formelle***
 
 On décrit la combinaison des machines de Turing M<sub>1</sub>, ..., M<sub>n</sub> comme suit :
 
@@ -147,3 +147,4 @@ Transitions :
 >   * M<sub>i</sub> &rarr;<sup>a</sup> M<sub>j</sub>, &delta;(h<sub>i</sub>, a) = (s<sub>j</sub>, a)
 
 > Si aucune flèche ne sort de M<sub>i</sub> avec un *a* dessus alors &delta;(h<sub>i</sub>, a) = (h<sup>\*</sup>, a).
+
