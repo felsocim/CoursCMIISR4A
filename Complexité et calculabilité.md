@@ -1,8 +1,8 @@
 # Complexité et calculabilité
 
-## À propos
+**À propos**
 
-Ce document reprend les notes du cours de Complexité et calculabilité dispensées par [**M Christian RONSE**](https://dpt-info.u-strasbg.fr/~cronse/welcome.html) à *l'Université de Strasbourg*.
+Ce document reprend les notes du cours de Complexité et calculabilité dispensées par [**Christian RONSE**](https://dpt-info.u-strasbg.fr/~cronse/welcome.html) à *l'Université de Strasbourg*.
 
 Mise en forme par [Marek Felsoci](mailto:marek.felsoci@etu.unistra.fr).
 
@@ -119,13 +119,27 @@ Dans la suite on outilisera les abbréviations M<sub>&rarr;</sub> et M<sub>&larr
 
 #### Combinaisons
 
-***Exemple***
+***Exemples***
 
 ![Combinaison de machines de Turing](images/machine_turing_composee.png)
 
 * On démarre avec M<sub>1</sub>.
 * Si M<sub>1</sub> se termine avec *a* sur la tête alors on va sur M<sub>2</sub>.
 * Si M<sub>1</sub> se termine avec *b* sur la tête alors on va sur M<sub>3</sub>.
+
+![Différents moyens de notation de machines de Turing](images/notation_mt.png)
+
+K = {s, h} &cup; {qa | q &isin; &Sigma; - {&#9655;, &#8852;}}
+
+|q|&sigma;|&delta;|
+|---|---|---|
+|s|&#9655;|(s, &rarr;)|
+|s|&#8852;|(s, &rarr;)|
+|s|a &ne; &#9655;, &#8852;|(q<sub>0</sub>, &rarr;)|
+|s|&#9655;|(q<sub>0</sub>, &rarr;)|
+|q<sub>0</sub>|x &ne; &#9655;|(h, a)| 
+
+![Machines raccourcies](images/raccourcis_mt.png)
 
 ***Définition formelle***
 
@@ -147,4 +161,101 @@ Transitions :
 >   * M<sub>i</sub> &rarr;<sup>a</sup> M<sub>j</sub>, &delta;(h<sub>i</sub>, a) = (s<sub>j</sub>, a)
 
 > Si aucune flèche ne sort de M<sub>i</sub> avec un *a* dessus alors &delta;(h<sub>i</sub>, a) = (h<sup>\*</sup>, a).
+
+## Décisions et calcul
+
+### Décision
+
+Partons de la configuration initiale (s, &#9655;**&#8852;**w) où *w* est le mot en entrée. Soit H = {y, n}.
+
+Une configuration d'arrêt sur l'état *y* respectivement sur l'état *n* est dite **acceptante** respectivement **refusante** ou **rejetante**. Une machine de Turing *M* accepte l'entrée *w* tel que *w* &isin; (&Sigma; - {&#9655;, &#8852;})<sup>\*</sup> si (s, &#9655;**&#8852;**w) &#8866;<sub>M</sub><sup>\*</sup> c'est-à-dire si on aboutit à une configuration acceptante. De même elle le rejette si on aboutit à une configuration rejetante.
+
+En pratique *w* &isin; &Sigma;<sub>0</sub><sup>\*</sup> &sube; &Sigma; - {&#9655;, &#8852;}.
+
+Soit L &sube; &Sigma;<sub>0</sub><sup>\*</sup> un **langage**. On dit que *M* décide *L* si et seulement si &forall;*w* &isin; L, M accepte *w* et &forall;*w* &isin; L&#773; = &Sigma;<sub>0</sub><sup>\*</sup> \\ L, M rejtte *w*. En d'autres termes si *w* fait partie du langage L la machine aboutit à l'état *y* (oui) sinon elle aboutit à l'état *n* (non).
+
+Un langage est **récursif** s'il existe une machine de Turing qui le décide.
+
+***Exemple***
+
+Soit l'alphabet &Sigma;<sub>0</sub> = {a, b, c} et L un langage récursif tel que {a<sup>n</sup>b<sup>n</sup>c<sup>n</sup> | n &isin; &#8469;}
+
+![Machine de Turing correspondante au langage récursif L](images/langage_recursif_mt.png)
+
+Voici l'évolution du contenu de la bande : *aaabbbccc* &rarr; *$aa$bb$cc* &rarr; *$$a$$b$$c* &rarr; *$$$$$$$$$* &rArr; Y
+
+### Calcul
+
+Soient H = { h } l'ensemble des états d'arrêt, l'alphabet &Sigma;<sub>0</sub> &sube; &Sigma; - {&#9655;, &#8852;} et un mot *w* &isin; &Sigma;<sub>0</sub><sup>\*</sup>.
+
+Si pour la configuration de départ (s, &#9655;**&#8852;**w) la machine de Turing s'arrête sur la configuration (h, &#9655;**&#8852;**u) avec *w* &isin; &Sigma;<sub>0</sub><sup>\*</sup> alors *u* est la sortie de la machine de Turing pour l'entrée *w*. Si la machine de Turing est notée M on écrit *u* = M(*w*). Si M ne s'arrête pas sur l'entrée *w* alors M(*w*) n'est pas défini.
+
+Soit *f* : &Sigma;<sub>0</sub><sup>\*</sup> &rarr; &Sigma;<sub>0</sub><sup>\*</sup> une fonction. Une fonction est **récursive** s'il y a une machine de Turing qui la calcule. Dans le cas des fonctions à plusieurs variables il faut un caractère spécial, un séparateur, pour séparer les mots en entrée.
+
+***Exemple***
+
+Addition entière : &Sigma;<sub>0</sub> = {0, 1, ;}
+
+> 5 + 7 = 12
+
+> 101;111 &rarr; 1100
+
+Une machine de Turing M calcule *f* : &#8469;<sup>k</sup> &rarr; &#8469; si pour l'entrée *codage*(x<sub>1</sub>, ..., x<sub>k</sub>), M s'arrête sur le mot en sortie *codage*(*f*(x<sub>1</sub>, ..., x<sub>k</sub>)).
+
+### Semi-décision
+
+Soient L &sube; &Sigma;<sub>0</sub><sup>\*</sup> tel que &Sigma;<sub>0</sub><sup>\*</sup> &sube; &Sigma; - {&#9655;, &#8852;}.
+
+Une machine de Turing M semi-décide L si et seulement si &forall;*w* &isin; &Sigma;<sub>0</sub><sup>\*</sup>. *w* &isin; L si et seulement si M s'arrête sur l'entrée *w*. En d'autres termes si *w* &isin; L la machine M s'arrête sinon elle boucle. 
+
+Un langage est **récursivement énumérable** s'il existe une machine de Turing qui le semi-décide. Voici quelques propriétés de L :
+
+> Si L est récursif alors L&#773; aussi. Il suffit d'inverser les Y et les N à la sortie de la machine de Turing. 
+> Si L est récursif alors L est récursivement énumérable. Autrement dit, on transforme l'état d'arrêt *n* en un état qui boucel sur lui-même : &delta;(*n*, *n* &ne; &#9655;) = (*n*, *x*).
+
+## Extensions de machines de Turing
+
+### Plusieurs bandes
+
+À chaque instant, en fonction de l'état et des caractères lus sur toutes les bandes on passe dans un nouvel état et on effectue une action sur chacune des bandes. Pour *n* bandes la fonction de transition sera de la forme :
+
+> &delta;(q, a<sub>1</sub>, ..., a<sub>n</sub>) = (p, b<sub>1</sub>, ..., b<sub>n</sub>) où a<sub>i</sub> &isin; &Sigma; et b<sub>i</sub> &isin; &Sigma; &cup; {&rarr;, &larr;}
+
+Notons la configuration comme suit :
+
+> (q', w<sub>1</sub>**a<sub>1</sub>**u<sub>1</sub>, ..., w<sub>n</sub>, **a<sub>n</sub>**, u<sub>n</sub>)
+
+Les mots d'entrée et de sortie se trouvent sur la première bande.
+
+Soit M une machine de Turing à *k* bandes. Il existe une machine de Turing standard M' sur un alphabet &Sigma;' tel que &Sigma; &sube; &Sigma;' avec les mêmes états d'arrêt telle que &forall;*x*,*y* &isin; &Sigma;<sup>\*</sup> M sur l'entrée *x* s'arrêtera sur la sortie *y* si et seulement si M' sur la sortie *x* s'arrêtera sur *y* avec le même état d'arrêt.
+
+#### Compléxité
+
+Si M le fait en *t* étapes, M' le fait en &Theta;(*t*(|*x*| + *t*)).
+
+![Exemple d'une machine de Turing à plusieurs bandes](images/bandes_multiples_mt.png)
+
+Les séries binaires indiquent la position de la première respectivement de la deuxième tête de lecture sur les bandes.
+
+#### Application théorique de deux bandes
+
+Un langage L est récursif si et seulement si L et L&#773; sont tous les deux récursivement énumérables.
+
+***Démonstration***
+
+**&rArr; :** Si L est récursif alors L&#773; l'est aussi. De plus si L et L&#773; sont récursifs alors ils sont également récursivement énumérables.
+
+**&lArr; :** Soient M<sub>1</sub> qui semi-décide L, K<sub>1</sub>, H<sub>1</sub> = {h<sub>1</sub>} et M<sub>2</sub> qui semi-décide L<sub>2</sub>, K<sub>2</sub>, H<sub>2</sub> = {h<sub>2</sub>}. 
+
+On démarre avec &#9655;**&#8852;**w sur chaque bande. M est une machine de Turing à deux bandes telle que K = (K<sub>1</sub> &times; K<sub>2</sub>) &cup; {*y*, *n*} et ayant les transitions suivantes :
+
+> Soient deux états non-terminaux q<sub>1</sub> &isin; K<sub>1</sub> - H<sub>1</sub> et q<sub>2</sub> &isin; K<sub>2</sub> - H<sub>2</sub>.
+
+> &delta;(q<sub>1</sub>, a<sub>1</sub>) = (p<sub>1</sub>, b<sub>1</sub>), &delta;(q<sub>2</sub>, a<sub>2</sub>) = (p<sub>2</sub>, b<sub>2</sub>)
+
+> &delta;((q<sub>1</sub>, q<sub>2</sub>), a<sub>1</sub>, a<sub>2</sub>) = ((p<sub>1</sub>, p<sub>2</sub>), b<sub>1</sub>, b<sub>2</sub>)
+
+> &delta;((h<sub>1</sub>, q<sub>2</sub>), a<sub>1</sub>, a<sub>2</sub>) = (y, a<sub>1</sub>, a<sub>2</sub>)
+
+> &delta;((q<sub>1</sub>, h<sub>2</sub>), a<sub>1</sub>, a<sub>2</sub>) = (n, a<sub>1</sub>, a<sub>2</sub>)
 
