@@ -403,3 +403,144 @@ Soit *(id + id)* \* *id* l'expression d'entrée. Alors la liste d'opérations de
 Voici l'arbre de syntaxe abstraite résultant :
 
 ![Arbre de syntaxe abstraite correspondant au résultat de l'analyse syntaxique ascendante](images/ast_asc.png)
+
+À chaque étape on examine le sommet de la pile en prenant en compte plusieurs de ses éléments à la fois. Ces éléments au sommet doivent correspondre au préfixe des parties droites d'une ou de plusieurs règles de grammaires. C'est ce que l'on appelle un **préfixe viable**. Au cas où aucun préfixe ne correspond au sommet on effectue l'action ***shift*** qui correspond à l'empilement du *token* courant et l'avancement du pointeur sur la chaîne d'entrée. Au cas où une partie droite correspond au sommet on effectue à la fois les actions ***shift*** et ***reduce***. Autrement dit, on dépile tous les éléments correspondant à la partie droite et on empile le symbole de la partie gauche.
+
+***Exemple***
+
+![Exemple de déroulement d'analyse syntaxique](images/asa_exemple.png)
+
+On procède par retours-arrière éventuels jusqu'à ce qu'il ne reste plus que S dans la pile et plus de *tokens* à l'entrée.
+
+***Exemple***
+
+Reprenons la grammaire G<sub>0</sub> sans multiplication :
+
+> E &rarr; E + T 
+> E &rarr; T
+> T &rarr; (E) 
+> T &rarr; *id*
+
+|pile|chaîne d'entrée|action|règle|
+|---|---|---|---|
+||*id* + (*id* + *id*)|*shift*||
+|*id*|+ (*id* + *id*)|*reduce*|T &rarr; *id*|
+|T|+ (*id* + *id*)|*reduce*| E &rarr; T|
+|E|+ (*id* + *id*)|*shift*||
+|E+|(*id* + *id*)|*shift*||
+|E+(|*id* + *id*)|*shift*||
+|E+(*id*|+ *id*)|*reduce*|T &rarr; *id*|
+|E+(T|+ *id*)|*reduce*|E &rarr; T|
+|E+(E|+ *id*)|*shift*||
+|E+(E+|*id*)|*shift*||
+|E+(E+*id*|)|*reduce*|T &rarr; *id*|
+|E+(E+T|)|*reduce*|E &rarr; E + T|
+|E+(E|)|*shift*||
+|E+(E)||*reduce*|T &rarr; (E)|
+|E+T||*reduce*|E &rarr; E + T|
+|E||||
+
+#### Problèmes à résoudre
+
+* Comment choisir entre *shift* et *reduce* ?
+* Comment choisir entre plusieurs *reduce* ?
+
+#### Solution
+
+L'analyseur doit non seulement prendre en compte le *token* courant et le sommet de la pile mais également tout le reste de la pile. Cette stratégie implique l'utilisation d'états qui représentent toute la pile et donc les situations que l'on peut rencontrer au niveau de la pile au cours d'analyse. Voir **L'analyse LR** (*Left-to-right*, *Rightmost*).
+
+#### Analyse LR
+
+Ce type d'analyse implique l'utilisation d'un pointeur sur la chaîne d'entrée suffixée par $ ainsi que d'une pile avec des états décrivant le contenu de la pile qui est de la forme S<sub>0</sub>X<sub>0</sub>S<sub>1</sub>X<sub>1</sub>...X<sub>m - 1</sub>S<sub>m</sub> où S est un état et X un symbole terminal ou non-terminal ou encore $.
+
+Analyse LR utilise également une table d'analyse ayant deux parties. 
+
+La partie *ACTION* comprend une ligne par état et une colonne par symbole terminal. Ainsi *ACTION*[S<sub>i</sub>, a] peut contenir :
+
+* *shift* S<sub>j</sub> où S<sub>j</sub> est un état : on empile *a* puis S<sub>j</sub> et on avance le pointeur
+* *reduce* *r*<sub>k</sub> où *k* est le numéro d'une règle : soit A &rarr; &beta; la k<sup>e</sup> règle et soit L la longueur de &beta; alors on dépile L éléments, on empile A et on empile l'état *GOTO*[S<sub>i</sub>, A] où S<sub>i</sub> est l'état courant
+* *accept*
+* erreur
+
+La partie *GOTO* comprend une ligne par état et une colonne par symbole non-terminal. Ainsi *GOTO*[S<sub>i</sub>, A] contient le nouvel état à empiler.
+
+#### Analyse SLR
+
+C'est la version simplifiée de l'analyse LR.
+
+***Grammaire augmentée***
+
+Il s'agit du remplacement de la grammaire G par une grammaire G' telle que G' = (V &cup; {S'}, &Sigma;, R &cup; {S' &rarr; S}, S').
+
+***Règle pointée***
+
+C'est l'utilisation d'un point dans la partie droite des règles afin de représenter ce qui a déjà été reconnu par l'analyse autrement dit ce qui a déjà passé par le sommet de la pile (A &rarr; &alpha; . &beta;).
+
+***État***
+
+L'état est représenté par un ensemble de règles pointées susceptibles d'être appliquées dans la suite de l'analyse avec le même préfixe viable.
+
+***Construction de l'état initial***
+
+Pour construire l'état initial on utilise une opération de *fermeture* sur les règles pointées.
+
+Si A &rarr; &alpha; . B&beta; appartient à l'état S alors on s'attend à rencontrer une sous-chaîne dérivable à partir de B&beta;. Donc s'il existe une règle B &rarr; &gamma; alors on s'attend à rencontrer une sous-chaîne dérivable à partir de &gamma;. B &rarr; . &gamma; doit appartenir à l'état S.
+
+L'opération de *fermeture* consiste à ajouter à un état S toutes les règles pointées qui doivent s'y trouver. L'état initial est égal à la fermeture de {S' &rarr; .S} où S est la règle la plus générale de la grammaire augmentée.
+
+***Exemple***
+
+Soit G<sub>0</sub> une grammaire augmentée composée des règles suivantes :
+
+> E' &rarr; E  
+> E &rarr; E + T  
+> E &rarr; T  
+> T &rarr; T \* F  
+> T &rarr; F  
+> F &rarr; (E)  
+> F &rarr; *id*
+
+L'état initial S<sub>0</sub> est égal à la *fermeture*({E' &rarr; .E}) qui correspond à {E' &rarr; .E, E &rarr; .E + T, E &rarr; .T, T &rarr; .T \* F, T &rarr; .F, &rarr; .(E), F &rarr; .*id*}.
+
+***Construction des états suivants***
+
+Dans cette phase on utilise l'opération *GOTO*. L'idée est que si S est un état qui correspond à un préfixe viable &alpha; alors *GOTO*(S, X) est un état qui correspond au préfixe viable &alpha;X. *GOTO*(S, X) est égal à la fermeture de toutes les règles de la forme A &rarr; &alpha;X.&beta; et telles que A &rarr; &alpha;.X&beta; &isin; S.
+
+***Exemple***
+
+En reprenant l'exemple précédent on calcule les états suivants comme suit :
+
+s<sub>1</sub> = *GOTO*(s<sub>0</sub>, E) = {E' &rarr; E., E &rarr; E. + T} (pas de *fermeture* à appliquer étant donné que le point est suivi de &epsilon; et d'un non-terminal)
+
+s<sub>2</sub> = *GOTO*(s<sub>0</sub>, T) = {E &rarr; T., T &rarr; T. \* F}
+
+s<sub>3</sub> = *GOTO*(s<sub>0</sub>, F) = {T &rarr; F.}
+
+s<sub>4</sub> = *GOTO*(s<sub>0</sub>, &laquo; ( &raquo;) = {F &rarr; (.E), E &rarr; .E + T, E &rarr; .T, T &rarr; .T \* F, T &rarr; .F, F &rarr; .(E), F &rarr; .*id*}
+
+s<sub>5</sub> = *GOTO*(s<sub>0</sub>, *id*) = {F &rarr; *id*}
+
+s<sub>6</sub> = *GOTO*(s<sub>1</sub>, +) = {E &rarr; E +. T, T &rarr; .T \* F, T &rarr; .F, F &rarr; .(E), F &rarr; .*id*}
+
+s<sub>7</sub> = *GOTO*(s<sub>2</sub>, \*) = {T &rarr; T \*. F, F &rarr; .(E), F &rarr; .*id*}
+
+s<sub>8</sub> = *GOTO*(s<sub>4</sub>, E) = {F &rarr; (E.), E &rarr; E. + T}
+
+s<sub>9</sub> = *GOTO*(s<sub>6</sub>, T) = {E &rarr; E + T., T &rarr; T. \* F}
+
+s<sub>10</sub> = *GOTO*(s<sub>7</sub>, F) = {T &rarr; T \* F.}
+
+s<sub>11</sub> = *GOTO*(s<sub>8</sub>, &laquo; ) &raquo;) = {F &rarr; (E).}
+
+***Construction de la table d'analyse***
+
+La partie *ACTION* :
+
+* Si A &rarr; &alpha;.a&beta; &isin; s<sub>i</sub> alors *ACTION*[s<sub>i</sub>, a] = *shift* s<sub>j</sub> où s<sub>j</sub> = *GOTO*(s<sub>i</sub>, a).
+* Si A &rarr; &alpha;. &isin; s<sub>i</sub> et si A &notin; s' alors *ACTION*[s<sub>i</sub>, a] = *reduce* r<sub>k</sub> où *k* est le numéro de la règle A &rarr; &alpha; et &forall;*a* &isin; *Follow*(A).
+* Si S' &rarr; S &isin; s<sub>i</sub> alors *ACTION*[s<sub>i</sub>, $] = *accept*.
+
+La partie *GOTO* :
+
+* *GOTO*(s<sub>i</sub>, A) = s<sub>j</sub> où s<sub>j</sub> est un état obtenu en appliquant l'opération *GOTO*(s<sub>i</sub>, A).
+
