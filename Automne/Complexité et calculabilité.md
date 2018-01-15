@@ -162,6 +162,8 @@ Transitions :
 
 > Si aucune flèche ne sort de M<sub>i</sub> avec un *a* dessus alors &delta;(h<sub>i</sub>, a) = (h<sup>\*</sup>, a).
 
+*****
+
 ## Décisions et calcul
 
 ### Décision
@@ -259,3 +261,64 @@ On démarre avec &#9655;**&#8852;**w sur chaque bande. M est une machine de Turi
 
 > &delta;((q<sub>1</sub>, h<sub>2</sub>), a<sub>1</sub>, a<sub>2</sub>) = (n, a<sub>1</sub>, a<sub>2</sub>)
 
+### Bande infinie des deux cotés
+
+Dans ce cas il n'y a plus besoin du symbole de début de bande. Il est possible de simuler cette construction par une machine de Turing à 2 bandes finies ayant des numéros de cases dans &#8484;.
+
+![Modélisation d'une bande infinie par deux bandes finies](images/machine_turing_bande_infinie.png)
+
+### Multiples têtes
+
+**Remarque :** Pour remédier au problème lorsque deux têtes de lecture se trouvent sur une seule et même case on peut utiliser des bandes en deux dimensions.
+
+Toute fonction décidée ou semi-décidée par les machines de Turing avec variantes peut l'être par une machine de Turing standard.
+
+De même si la compléxité d'une fonction décidée ou semi-décidée par une machine de Turing avec variantes est polynomiale elle le sera aussi avec une machine de Turing standard étant donné qu'en remplaçant des variables d'un polynôme par des polynômes on obtient toujours un autre polynôme.
+
+## Machines de Turning non-déterministes
+
+La fonction de transition &delta; est remplacée par une relation &Delta; telle que &Delta; &sube; (K - H) &times; &Sigma; &times; K &times; (&Sigma; &cup; {&rarr;, &larr;}) où (K - H) est l'ensemble des états non-terminaux, &Sigma; est le contenu de la bande, K le nouvel état et (&Sigma; &cup; {&rarr;, &larr;}) l'action à effectuer sur la bande.
+
+Alors &Delta;(*q*, *a*, *p*, *b*) signifie que si on est dans l'état *q* &notin; H et qu'on lit *a* sur la bande alors on peut aller dans l'état *p* et faire *b* sur la bande.
+
+|*q*|*a*|(*p*, *b*)|
+|---|---|---|
+|...|...|...|
+
+Soit &#8866; le symbole de transition alors C &#8866; C' veut dire que l'on peut aller de la configuration C à la configuration C'. À partir d'une configuration intiale on obtient par dérivation une arborescence de configurations :
+
+![Exemple d'arborescence de configuration](images/arbo.png)
+
+*Notations*
+
+* *s* : configuration initiale
+* *w* : partie du mot déjà lue
+* *v* : partie du mot à droite de la tête de lecture
+
+On note *r* le nombre maximum de choix qu'on peut avoir à chaque configuration tel que *max*(*Card*({(*p*, *b*) &isin; K &times; (&Sigma; &cup; {&rarr;, &larr;} | &Delta;(*q*, *a*, *p*, *b*)}))), (*q*, *a*) &isin; (K - H) &times; &Sigma;.
+
+Soit M une machine de Turing non-déterministe. M accepte le mot *w* si pour un *h* &isin; H et *v*, *u* &isin; &Sigma;<sup>\*</sup>, a &isin; &Sigma; on a (s, &#9655;**&#8852;**w) &#8866; (h, v**a**u). Autrement dit, pour une succession de dérivations on peut à partir d'une configuration initiale aboutir à une configuration terminale.
+
+M décide le langage L si pour tout mot *w* en entrée :
+
+* il existe un *n* &isin; &#8469; fonction de *w* et de M pour lequel il n'y a pas de configuration C avec (*s*, &#9655;**&#8852;** *w*) &#8866;<sup>n</sup> C,
+* *w* &isin; L &hArr; &exist; *u*, *v* &isin; &Sigma;<sup>\*</sup>, a &isin; &Sigma;, (s, &#9655;**&#8852;**w) &#8866;<sup>\*</sup> (y, v**a**u) (au moins une dérivation aboutit à *y*, sinon elles sont toutes à *n*).
+
+*Arborescence de configurations*
+
+Si *w* &isin; L alors &exist; une feuille *y*, sinon toutes les feuilles donnent *n*.
+
+![Illustration d'arborescence de configurations](images/arbo2.png)
+
+M semi-décide L pour tout mot *w* en entrée si *w* &isin; L &hArr; &exist; *u*, *v* &isin; &Sigma;<sup>\*</sup>, a &isin; &Sigma;, (s, &#9655;**&#8852;**w) &#8866;<sup>\*</sup> (h, u**a**v) (au moins une dérivation aboutit à l'arrêt).
+
+### Calcul d'une fonction *f*
+
+*Conditions*
+
+1. Comme pour la décision.
+2. (*s*, &#9655;**&#8852;**w) &#8866;<sup>\*</sup> (h, u**a**v) &hArr; u**a**v) = &#9655;**&#8852;** *f*(w)
+
+Tout langage décidé ou semi-décidé et toute fonction calculée par une machine de Turing non-déterministe l'est aussi par une machine de Turing déterministe. Si la machine de Turing non-déterministe décide en temps *t*, la machine de Turing déterministe décide en temps O(r<sup>*t*</sup>) (en faisant toujours un parcours en largeur).
+
+L'idée du non-déterminisme est que si on a beaucoup de chance on trouve le résultat en temps polynomiale sinon en temps exponentiel (plus exactement factoriel mais comparable à l'exponentiel via la formule de Sterling) car il y a un long parcours de possibilités à effectuer.
