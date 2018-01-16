@@ -1,2 +1,7 @@
 # Graphics PSD sources
-images/*.psd
+*.psd
+
+# LaTeX-specific files
+*.aux
+*.log
+*.out
