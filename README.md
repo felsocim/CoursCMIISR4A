@@ -38,4 +38,4 @@ Pour toute question relative aux cours veuillez contacter vos enseignants à l'u
 
 ## Contribution
 
-Tous les étudiants en quatrième année du Cursus master en ingénierie spécialié en informatique, systèmes et réseaux sont autorisés et chaleureusement invités à contribuer à enrichir ce répertoire.
+Tous les étudiants en quatrième année du Cursus master en ingénierie spécialisé en informatique, systèmes et réseaux sont autorisés et chaleureusement invités à contribuer à enrichir ce répertoire.
