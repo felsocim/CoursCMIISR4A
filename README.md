@@ -17,10 +17,10 @@ Vous trouverez les informations liées aux auteurs respectifs dans chaque docume
 
 ## Liste de matières
 
-> * [Algorithmes distribués](Automne/Algorithmes distribués.md)
-> * [Complexité et calculabilité](Automne/Complexité et calculabilité.md)
-> * [Compilation](Compilation.md)
-> * [Sécurité des systèmes et réseaux](Automne/pdf/Sécurité des systèmes et réseaux.pdf)
+> * [Algorithmes distribués](Automne/Algorithmes%20distribués.md)
+> * [Complexité et calculabilité](Automne/Complexité%20et%20calculabilité.md)
+> * [Compilation](Automne/Compilation.md)
+> * [Sécurité des systèmes et réseaux](Automne/pdf/Sécurité%20des%20systèmes%20et%20réseaux.pdf)
 > * [Parallélisme](Printemps/pdf/Parallélisme.pdf)
 
 ## Dégagement de responsabilités
