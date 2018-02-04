@@ -28,10 +28,14 @@ Cependant certains résumés sont directement disponibles au format PDF dans les
 
 ## Dégagement de responsabilités
 
-L'auteur des résumés de cours disponibles dans ce répertoire n'est en aucune façon responsable de l'exactitude des informations constituant ces résumés de cours.
+Le ou les auteurs des résumés de cours disponibles dans ce répertoire n'exerce(nt) aucune responsabilité concernant l'exactitude des informations constituant ces résumés de cours.
 
 ## Questions et suggestions
 
-Pour les suggestions d'amélioration ou de correction d'erreurs veuillez contacter l'auteur des documents sur [marek.felsoci@etu.unistra.fr](mailto:marek.felsoci@etu.unistra.fr).
+Pour les suggestions d'amélioration ou de correction d'erreurs veuillez contacter le ou les auteur(s) du document en question.
 
 Pour toute question relative aux cours veuillez contacter vos enseignants à l'université.
+
+## Contribution
+
+Tous les étudiants en quatrième année du Cursus master en ingénierie spécialié en informatique, systèmes et réseaux sont autorisés et chaleureusement invités à contribuer à enrichir ce répertoire.
