@@ -1,13 +1,10 @@
 # Résumé de cours de M1 Cursus Master en Ingénierie : Informatique, Systèmes et Réseaux
 
-Ce répertoire public met à disposition les résumés de cours dispensés dans le cadre de la quatrième année du Cursus Master en Ingérie spécialisé en Informatique, systèmes et réseaux. Les résumés sont disponibles uniquement pour les cours où :
-
-* soit aucun support physique n'a été fourni par le ou les intervenant.e.s
-* soit le support fourni a été jugé incomplet et/ou pas suffisamment synthétique
+Ce répertoire public met à disposition les résumés des cours choisis dispensés dans le cadre de la quatrième année du Cursus Master en Ingérie spécialisé en Informatique, systèmes et réseaux.
 
 ## Important !
 
-Dans la mesure du possible les résumées sont régulièrement mis à jour.
+Les résumés sont mis à jour aussi régulièrement que possible.
 
 Le seul but de cette initiative est de faciliter aux étudiants de cette filière les révisions et la préparation aux examens. C'est pourquoi les résumés de cours disponibles dans ce répertoire sont destinés **uniquement à usage académique** !
 
