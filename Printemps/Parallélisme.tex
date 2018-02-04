@@ -1,13 +1,27 @@
 \documentclass[12pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{palatino}
+\usepackage{amsmath,amssymb,amsfonts,graphicx,hyperref,listings,palatino,xcolor}
 
 \setlength{\parindent}{3em}
 \setlength{\parskip}{1em}
 \renewcommand{\baselinestretch}{1.3}
 \renewcommand{\contentsname}{Table des matières}
+
+\lstset{
+  language=C++,
+  frame=tb,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=flexible,
+  basicstyle=\ttfamily,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{green}\ttfamily,
+  morecomment=[l][\color{magenta}]{\#},
+  morekeywords={parallel},
+  emph={floor},
+  emphstyle=\color{violet}
+}
 
 \title{%
   \textbf{Parallélisme} \\
@@ -17,7 +31,7 @@
   \huge L'USAGE DE CE DOCUMENT NE PEUT ÊTRE QU'ACADÉMIQUE
 }
 \author{Marek Felšöci}
-\date{15 janvier 2018}
+\date{4 février 2018}
 
 \begin{document}
   \maketitle
@@ -213,13 +227,19 @@
       Étudions la technique de programmation parallèle sur un exemple :
       \paragraph{Évaluation d'un polynôme} \(P(x) = a + b \times x + c \times
       x^2 + d \times x ^ 3\) \\
-      En séquentiel, \(FOR\ i = 0 \rightarrow N\ DO\ res(i) = a + b \times v(i)
-      + c \times v(i)^2 + d \times v(i)^3\). \\
+      En séquentiel :
+      \begin{lstlisting}
+        for (i = 0; i < n; i++)
+          res[i] = a + b * v[i] + c * v[i] ^ 2 + d * v[i] ^ 3;
+      \end{lstlisting}
       En parallèle, on a trois possibilités :
       \begin{enumerate}
         \item \textbf{parallélisme des données} (s'assurer de l'indépendance des
-         données) : \(PARALLEL\_FOR\ i = 0 \rightarrow (N - 1)\ DO\ res(i) =
-        P(v(i))\)\\
+         données) :
+        \begin{lstlisting}
+          parallel for (i = 0; i < (n - 1); i++)
+            res[i] = P(v[i]);
+        \end{lstlisting}
         Un compilateur parallèle produit un exécutable parallèle. Mais
         généralement le nombre de processeurs est inférieur à N. Comment
         répartir alors les itérations sur les processeurs ?
@@ -244,5 +264,97 @@
           \caption{\textit{Floating Point Multiply Add}}
           \label{fig:mdistr}
         \end{figure}
+        \item \textbf{parallélisme de la mémoire vive} : implique un nombre
+        arbitraire de processeurs synchronisés disposant des instruction
+        habituelles (addition, multiplication, etc.) ainsi que l'utilisation
+        d'une mémoire partagée. \\
+        Dans ce cas on analyse deux types de ressources :
+        \begin{itemize}
+          \item le temps total d'une exécution
+          \item le coût exprimé en nombre total d'instructions
+        \end{itemize}
+        \textit{\textbf{Exemple :} opération OU (algorithmes)} \\
+        La donnée en entrée est un vecteur $a[]$ de base. La question qu'on se
+        pose est de savoir s'il y a une seule valeur qui soit vraie. \\
+        \begin{lstlisting}
+          result = false;
+          parallel for (i = 0; i < (n - 1); i++)
+            if(a[i]) result = true;
+          return result;
+        \end{lstlisting}
+        Le coût est de $O(n)$ et le temps est constant $O(1)$. \\
+        Le problème est que plusieurs processeurs écrivent dans la même variable
+        . On distingue alors \textit{Concurrent Read and Concurrent Write} dans
+        la RAM parallèle ce qui n'est pas réaliste. Il faudrait donc mettre en
+        place \textit{Concurrent Read and Exclusive Write} :
+        \begin{lstlisting}
+          parallel for (i = 0; i < (n - 1); i++)
+            b[i] = a[i]; // tout acces est exclusif
+          while (n > 1) {
+            r = n % 2;
+            m = floor(n / 2); // partie entiere inferieure
+            n = m + r;
+            parallel for (i = 0; i < (m - 1); i++)
+              b[i] = (b[i] || b[i + n]);
+          }
+          return b[0];
+        \end{lstlisting}
+        Dans ce cas le temps est de $O(log(n))$ et le coût $O(n * log(n))$ le
+        but étant d'avoir le coût de $O(n)$ avec $\frac{n}{log(n)}$ processeurs.
+         \\
+        Toujours est-il que l'accès concurrent à la mémoire est primordial. Il
+        faut donc assurer la \textbf{cohérence} et la \textbf{performance}. \\
+        \textit{\textbf{Exemple :}}
+        \begin{lstlisting}
+          tmp0 = a;
+          tmp1 = a;
+          tmp0 = tmp0 + 1;
+          tmp1 = tmp1 + 1;
+          a = tmp0;
+          a = tmp1;
+        \end{lstlisting}
+        Ici la variable $a$ est augmentée deux fois : $2 \times op(a + 1)$ !
       \end{enumerate}
+  \section{Communication MPI}
+    \subsection{Instructions atomiques}
+      Ce sont des instructions spécialisées caractérisées comme étant
+      \textbf{indivisibles}, \textbf{linéarisables} et
+      \textbf{non-interruptibles}. \\
+      Pour déclarer une variable comme atomique on utilise la syntaxe suivante :
+      \textit{unsigned \_Atomic int counter = 0} \\
+      Ainsi toutes les opérations effectuées sur celle-ci sont atomiques et donc
+      effectuées en une seule opération. Mais le coût en est énorme.
+    \subsection{Passage de messages}
+      Chaque acteur (processeur ou processus) dispose d'une adresse et d'un état
+      séparés. Ils communiquent en mode \textit{peer-to-peer}. Ainsi on évite
+      l'accès concurrent. \\
+      Pour communiquer on utilise les fonctions \textit{send} (envoi de message)
+       et \textit{recv} (réception de message). \\
+      Plusieurs types de communication sont possibles :
+      \begin{itemize}
+        \item \textbf{fiable}
+        \item \textbf{ordnonnée} (sans déséquencement)
+        \item \textbf{synchrone} (aller-retours en direct)
+        \item \textbf{asynchrone} (sans réponse instantannée)
+        \item \textbf{bloquante}
+      \end{itemize}
+    \subsection{Autres primitives (macro communication)}
+      \begin{enumerate}
+        \item \textbf{synchronisation} [tous, pas de donnée] : attendre que tous les
+        acteurs aient fini l'opération concernée pour pouvoir synchroniser
+        \item \textbf{diffusion} (\textit{broadcast}) [1 à tous, le même
+        message]
+        \item \textbf{distribution} (\textit{scatter}) [1 à tous, $n$ messages
+        différents]
+        \item \textbf{rassemblement} (\textit{gather}) [tous à 1, $n$ messages
+        différents]
+        \item \textbf{commérage} (\textit{all-to-all}) [tous à tous, $n$
+        messages différents]
+        \item \textbf{transposition} (\textit{multiscatter}) [tous à tous, $n^2$
+         messages différents]
+        \item \textbf{réduction} : pour une opération $\otimes$ on a $d = \bigotimes_{i = 0}^{n - 1} d_i$
+        \item \textbf{traduction} : diffusion
+      \end{enumerate}
+      Les six premières opérations sont inefficaces si elles sont réalisées en
+      mode \textit{peer-to-peer}.
 \end{document}
