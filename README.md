@@ -3,7 +3,7 @@
 Ce répertoire public met à disposition les résumés de cours dispensés dans le cadre de la quatrième année du Cursus Master en Ingérie spécialisé en Informatique, systèmes et réseaux. Les résumés sont disponibles uniquement pour les cours où :
 
 * soit aucun support physique n'a été fourni par le ou les intervenant.e.s
-* soit le support fourni est incomplet
+* soit le support fourni a été jugé incomplet et/ou pas suffisamment synthétique
 
 ## Important !
 
@@ -22,6 +22,12 @@ Vous trouverez les informations liées aux auteurs respectifs dans chaque docume
 > * [Compilation](Automne/Compilation.md)
 > * [Sécurité des systèmes et réseaux](Automne/pdf/Sécurité%20des%20systèmes%20et%20réseaux.pdf)
 > * [Parallélisme](Printemps/pdf/Parallélisme.pdf)
+
+## Format des documents
+
+Les résumés disponibles sont écrits soit dans le langage Markdown soit en LaTeX. Il est possible de convertir un document au format MD en PDF en utilisant par exemple l'outil ***pandoc*** et un document au format TEX en PDF en utilisant par exemple l'outil ***pdflatex***.
+
+Cependant certains résumés sont directement disponibles au format PDF dans les dossiers *pdf* de chaque période.
 
 ## Dégagement de responsabilités
 
