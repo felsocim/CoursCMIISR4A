@@ -15,7 +15,7 @@ Le seul but de cette initiative est de faciliter aux étudiants de cette filièr
 
 Vous trouverez les informations liées aux auteurs respectifs dans chaque document.
 
-## Liste de matières
+## Liste des matières
 
 > * [Algorithmes distribués](Automne/Algorithmes%20distribués.md)
 > * [Complexité et calculabilité](Automne/Complexité%20et%20calculabilité.md)
