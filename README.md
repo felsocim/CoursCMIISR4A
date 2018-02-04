@@ -1,10 +1,13 @@
 # Résumé de cours de M1 Cursus Master en Ingénierie : Informatique, Systèmes et Réseaux
 
-Ce répertoire public met à disposition les résumés de cours dispensés dans le cadre de la quatrième année du Cursus Master en Ingérie spécialisé en Informatique, systèmes et réseaux. Les résumés s'appuyent sur les support de cours d'origine. Ceux-ci ont été synthétisés et enrichis des informations supplémentaires et exemples illustrés présentés durant les séances de cours.
+Ce répertoire public met à disposition les résumés de cours dispensés dans le cadre de la quatrième année du Cursus Master en Ingérie spécialisé en Informatique, systèmes et réseaux. Les résumés sont disponibles uniquement pour les cours où :
+
+* soit aucun support physique n'a été fourni par le ou les intervenant.e.s
+* soit le support fourni est incomplet
 
 ## Important !
 
-Les documents sont régulièrement mis à jour après chaque séance de cours.
+Dans la mesure du possible les résumées sont régulièrement mis à jour.
 
 Le seul but de cette initiative est de faciliter aux étudiants de cette filière les révisions et la préparation aux examens. C'est pourquoi les résumés de cours disponibles dans ce répertoire sont destinés **uniquement à usage académique** !
 
@@ -14,13 +17,11 @@ Vous trouverez les informations liées aux auteurs respectifs dans chaque docume
 
 ## Liste de matières
 
-> * Algorithmes distribués
-> * Complexité et calculabilité
-> * Compilation
-> * Sécurité des systèmes et réseaux
-> * Parallélisme
-
-Les résumés des autres matières seront publiés dès que les documents relatifs seront mis en forme.
+> * [Algorithmes distribués](Automne/Algorithmes distribués.md)
+> * [Complexité et calculabilité](Automne/Complexité et calculabilité.md)
+> * [Compilation](Compilation.md)
+> * [Sécurité des systèmes et réseaux](Automne/pdf/Sécurité des systèmes et réseaux.pdf)
+> * [Parallélisme](Printemps/pdf/Parallélisme.pdf)
 
 ## Dégagement de responsabilités
 
