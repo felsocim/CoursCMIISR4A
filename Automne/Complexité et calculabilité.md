@@ -1,12 +1,12 @@
 # Complexité et calculabilité
 
-**À propos**
-
-Ce document reprend les notes du cours de Complexité et calculabilité dispensées par [**Christian RONSE**](https://dpt-info.u-strasbg.fr/~cronse/welcome.html) à *l'Université de Strasbourg*.
-
 Mise en forme par [Marek Felsoci](mailto:marek.felsoci@etu.unistra.fr).
 
-**ATTENTION !** L'USAGE DE CE RÉSUMÉ DE COURS NE PEUT ÊTRE QU'ACADÉMIQUE.
+**L'USAGE DE CE RÉSUMÉ DE COURS NE PEUT ÊTRE QU'ACADÉMIQUE**
+
+## Crédits
+
+Ce résumé s'appuie sur les notes du cours de Complexité et calculabilité dispensé par Christian RONSE à l'Université de Strasbourg.
 
 ## Machines de Turing
 
@@ -137,7 +137,7 @@ K = {s, h} &cup; {qa | q &isin; &Sigma; - {&#9655;, &#8852;}}
 |s|&#8852;|(s, &rarr;)|
 |s|a &ne; &#9655;, &#8852;|(q<sub>0</sub>, &rarr;)|
 |s|&#9655;|(q<sub>0</sub>, &rarr;)|
-|q<sub>0</sub>|x &ne; &#9655;|(h, a)| 
+|q<sub>0</sub>|x &ne; &#9655;|(h, a)|
 
 ![Machines raccourcies](images/raccourcis_mt.png)
 
@@ -208,11 +208,11 @@ Une machine de Turing M calcule *f* : &#8469;<sup>k</sup> &rarr; &#8469; si pour
 
 Soient L &sube; &Sigma;<sub>0</sub><sup>\*</sup> tel que &Sigma;<sub>0</sub><sup>\*</sup> &sube; &Sigma; - {&#9655;, &#8852;}.
 
-Une machine de Turing M semi-décide L si et seulement si &forall;*w* &isin; &Sigma;<sub>0</sub><sup>\*</sup>. *w* &isin; L si et seulement si M s'arrête sur l'entrée *w*. En d'autres termes si *w* &isin; L la machine M s'arrête sinon elle boucle. 
+Une machine de Turing M semi-décide L si et seulement si &forall;*w* &isin; &Sigma;<sub>0</sub><sup>\*</sup>. *w* &isin; L si et seulement si M s'arrête sur l'entrée *w*. En d'autres termes si *w* &isin; L la machine M s'arrête sinon elle boucle.
 
 Un langage est **récursivement énumérable** s'il existe une machine de Turing qui le semi-décide. Voici quelques propriétés de L :
 
-> Si L est récursif alors L&#773; aussi. Il suffit d'inverser les Y et les N à la sortie de la machine de Turing. 
+> Si L est récursif alors L&#773; aussi. Il suffit d'inverser les Y et les N à la sortie de la machine de Turing.
 > Si L est récursif alors L est récursivement énumérable. Autrement dit, on transforme l'état d'arrêt *n* en un état qui boucel sur lui-même : &delta;(*n*, *n* &ne; &#9655;) = (*n*, *x*).
 
 ## Extensions de machines de Turing
@@ -247,7 +247,7 @@ Un langage L est récursif si et seulement si L et L&#773; sont tous les deux r�
 
 **&rArr; :** Si L est récursif alors L&#773; l'est aussi. De plus si L et L&#773; sont récursifs alors ils sont également récursivement énumérables.
 
-**&lArr; :** Soient M<sub>1</sub> qui semi-décide L, K<sub>1</sub>, H<sub>1</sub> = {h<sub>1</sub>} et M<sub>2</sub> qui semi-décide L<sub>2</sub>, K<sub>2</sub>, H<sub>2</sub> = {h<sub>2</sub>}. 
+**&lArr; :** Soient M<sub>1</sub> qui semi-décide L, K<sub>1</sub>, H<sub>1</sub> = {h<sub>1</sub>} et M<sub>2</sub> qui semi-décide L<sub>2</sub>, K<sub>2</sub>, H<sub>2</sub> = {h<sub>2</sub>}.
 
 On démarre avec &#9655;**&#8852;**w sur chaque bande. M est une machine de Turing à deux bandes telle que K = (K<sub>1</sub> &times; K<sub>2</sub>) &cup; {*y*, *n*} et ayant les transitions suivantes :
 

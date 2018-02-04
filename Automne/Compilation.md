@@ -1,12 +1,12 @@
 # Compilation
 
-## À propos
-
-Ce document reprend les notes du cours de Compilation dispensés par [**M Philippe CLAUSS**](http://icps.u-strasbg.fr/~clauss/) à *l'Université de Strasbourg*.
-
 Mise en forme par [Marek Felsoci](mailto:marek.felsoci@etu.unistra.fr).
 
-**ATTENTION !** L'USAGE DE CE RÉSUMÉ DE COURS NE PEUT ÊTRE QU'ACADÉMIQUE.
+**L'USAGE DE CE RÉSUMÉ DE COURS NE PEUT ÊTRE QU'ACADÉMIQUE**
+
+## Crédits
+
+Ce résumé s'appuie sur les notes du cours de Compilation dispensé par Philippe CLAUSS à l'Université de Strasbourg.
 
 ## Introduction
 
@@ -195,10 +195,10 @@ Après la dérécursivation décrite plus haut on obtient la grammaire équivale
 
 Pour éliminer des récursivités indirectes l'idée est pour toutes les règles de la forme *A &rarr; B&alpha;* et *B &rarr; A&Beta;* d'anticiper les règles problématiques *A &rarr; A&Beta;&alpha;* puis éliminer la récursivité directe avec la méthode précédente.
 
-Dans le cas général on applique l'algorithme suivant : 
+Dans le cas général on applique l'algorithme suivant :
 
 ```
-Soit A[1] | ... | A[n] une liste ordonnée des symboles non-terminaux. 
+Soit A[1] | ... | A[n] une liste ordonnée des symboles non-terminaux.
 
 POUR i DE 1 À n FAIRE
     POUR j DE 1 À n-1 FAIRE
@@ -214,7 +214,7 @@ FIN POUR
 
 L'algorithme précédant est coûteux comme il implique la recherche des règles applicables ainsi que des opérations de modification de l'arbre.
 
-La première solution est l'analyse par descente récursive. 
+La première solution est l'analyse par descente récursive.
 
 ***Exemple***
 
@@ -341,7 +341,7 @@ Soit *a* un symbole terminal quelcoonque.
     * ajouter tous les terminaux de *First*(x<sub>1</sub>)
     * ajouter tous les terminaux de *First*(x<sub>2</sub>) &hArr; &epsilon; *First*(x<sub>1</sub>)
     * ajouter tous les terminaux de *First*(x<sub>3</sub>...x<sub>n</sub>) &hArr; &epsilon; &isin; (*First*(x<sub>1</sub>) &cap; ... &cap; *First*(x<sub>n - 1</sub>))
-    
+
 ***Exemple de calcul de First***
 
 Reprenons la grammaire *G<sub>0</sub>* dérécursivée des expressions arithmétiques :
@@ -360,8 +360,8 @@ Reprenons la grammaire *G<sub>0</sub>* dérécursivée des expressions arithmét
 
 #### Calcul de l'ensemble *Follow*
 
-* En premier, il faut inclure $ dans *Follow*(S). 
-* S'il existe une règle de la forme A &rarr; &alpha;B&beta; alors on ajoute *First*(&beta;) - {&epsilon;} à *Follow*(B). 
+* En premier, il faut inclure $ dans *Follow*(S).
+* S'il existe une règle de la forme A &rarr; &alpha;B&beta; alors on ajoute *First*(&beta;) - {&epsilon;} à *Follow*(B).
 * S'il existe une règle de grammaire de la forme A &rarr; &alpha;B ou de la forme A &rarr; &alpha;B&beta; avec &epsilon; &isin; *First*(&beta;) alors on ajoute *Follow*(A) à *Follow*(B).
 
 ***Exemple de calcul de Follow***
@@ -416,9 +416,9 @@ On procède par retours-arrière éventuels jusqu'à ce qu'il ne reste plus que 
 
 Reprenons la grammaire G<sub>0</sub> sans multiplication :
 
-> E &rarr; E + T 
+> E &rarr; E + T
 > E &rarr; T
-> T &rarr; (E) 
+> T &rarr; (E)
 > T &rarr; *id*
 
 |pile|chaîne d'entrée|action|règle|
@@ -453,7 +453,7 @@ L'analyseur doit non seulement prendre en compte le *token* courant et le sommet
 
 Ce type d'analyse implique l'utilisation d'un pointeur sur la chaîne d'entrée suffixée par $ ainsi que d'une pile avec des états décrivant le contenu de la pile qui est de la forme S<sub>0</sub>X<sub>0</sub>S<sub>1</sub>X<sub>1</sub>...X<sub>m - 1</sub>S<sub>m</sub> où S est un état et X un symbole terminal ou non-terminal ou encore $.
 
-Analyse LR utilise également une table d'analyse ayant deux parties. 
+Analyse LR utilise également une table d'analyse ayant deux parties.
 
 La partie *ACTION* comprend une ligne par état et une colonne par symbole terminal. Ainsi *ACTION*[S<sub>i</sub>, a] peut contenir :
 
@@ -543,4 +543,3 @@ La partie *ACTION* :
 La partie *GOTO* :
 
 * *GOTO*(s<sub>i</sub>, A) = s<sub>j</sub> où s<sub>j</sub> est un état obtenu en appliquant l'opération *GOTO*(s<sub>i</sub>, A).
-

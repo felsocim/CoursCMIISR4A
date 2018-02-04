@@ -1,16 +1,12 @@
 # Algorithmes distribués
 
-## À propos
-
-Ce document reprend les notes du cours d'Algorithmes distribués dispensées par **Mme Stella MARC-ZWECKER** à *l'Université de Strasbourg*. Le contenu s'appuyant sur les textes d'origine consultables [sur la plateforme *Moodle* de l'université](https://moodle3.unistra.fr/course/view.php?id=2687) ou [sur la page officielle de l'enseignant](http://dpt-info.u-strasbg.fr/~stella/enseignement/page_accueil.html) a été synthétisé et enrichi des informations complémentaires et des exemples illustrés présentés durant les séances de cours.
-
 Mise en forme par [Marek Felsoci](mailto:marek.felsoci@etu.unistra.fr).
 
-**ATTENTION !** L'USAGE DE CE RÉSUMÉ DE COURS NE PEUT ÊTRE QU'ACADÉMIQUE.
+**L'USAGE DE CE RÉSUMÉ DE COURS NE PEUT ÊTRE QU'ACADÉMIQUE**
 
 ## Crédits
 
-Support de cours d'Algorithmes distribués, [Stella MARC-ZWECKER](http://dpt-info.u-strasbg.fr/~stella/), [Université de Strasbourg](http://www.unistra.fr/index.php?id=accueil), 2017 [https://moodle3.unistra.fr/course/view.php?id=2687, http://dpt-info.u-strasbg.fr/~stella/enseignement/page_accueil.htm]
+Ce résumé s'appuie sur les notes et les supports du cours d'Algorithmes distribués dispensé par Stella MARC-ZWECKER à l'Université de Strasbourg consultables [sur la page officielle de l'enseignant](http://dpt-info.u-strasbg.fr/~stella/enseignement/page_accueil.html).
 
 ## 1 Introduction
 
@@ -512,10 +508,10 @@ Un processus qui est en section critique ne détruit le message *req* qui se tro
 
 **Principes**
 
-* Le processus qui est en section critique possède un privilège matérialisé par un **jeton**. 
-* Tant qu'un processus possède le jeton, il peut accèder à la section critique sans consulter les autres. 
-* Initialement, le jeton est est affecté à un processus quelconque. 
-* Le jeton est demandé par le processus P<sub>i</sub> à l'aide d'une requête estampillée et diffusée à tous les autres processus. 
+* Le processus qui est en section critique possède un privilège matérialisé par un **jeton**.
+* Tant qu'un processus possède le jeton, il peut accèder à la section critique sans consulter les autres.
+* Initialement, le jeton est est affecté à un processus quelconque.
+* Le jeton est demandé par le processus P<sub>i</sub> à l'aide d'une requête estampillée et diffusée à tous les autres processus.
 * Le jeton est constitué d'un tableau dont le *k*<sup>ième</sup> élément mémorise l'estampille de la dernière visite qu'il a effectuée au processus P<sub>k</sub>.
 * Lorsque le processus P<sub>j</sub> qui possède le jeton ne désire pas/plus accèder à la section critique, il cherche dans le tableau qui matérialise le jeton, le premier processus P <sub>m</sub> (*m* choisi dans l'ordre *j* + 1, ..., *n*, 1, ..., *j* - 1 c'est-à-dire en partant de *j*) tel que l'estampille de la dernière requête de P<sub>m</sub> soit supérieure à l'estampille mémorisée par le jeton lors de sa dernière visite à P<sub>m</sub>. P<sub>j</sub> envoie alors le jeton à P<sub>m</sub>.
 
