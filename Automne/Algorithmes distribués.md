@@ -417,7 +417,7 @@ Ces algorithmes minimisent le nombre de messages à l'envoi de ceux correspondan
 
 **Principes**
 
-Dans un système centralisé, l'exclusion mutuelle est effectuée par un processus qui gère l'accès à la section critique au moyen d'une file d'attente (voir algorithme de boulangerie). Pour distribuer cet algorithme centralisé, il suffit de **répartir la file sur tous les sites**. De cette façon chaque site reçoit tous les messages de requête et de libération des autres istes. Les messages sont totalement ordonnés grâce à l'estampillage de Lamport. Pour qu'un processus puisse accèder à la section critique au vu de l'état de sa seule file d'attente, il doit avoir reçu un message *suffisament récent* de tous les autres sites.
+Dans un système centralisé, l'exclusion mutuelle est effectuée par un processus qui gère l'accès à la section critique au moyen d'une file d'attente (voir algorithme de boulangerie). Pour distribuer cet algorithme centralisé, il suffit de **répartir la file sur tous les sites**. De cette façon chaque site reçoit tous les messages de requête et de libération des autres sites. Les messages sont totalement ordonnés grâce à l'estampillage de Lamport. Pour qu'un processus puisse accèder à la section critique au vu de l'état de sa seule file d'attente, il doit avoir reçu un message *suffisament récent* de tous les autres sites.
 
 Les messages peuvent être de trois types :
 
