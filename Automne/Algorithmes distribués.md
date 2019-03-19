@@ -491,7 +491,7 @@ h := h + 1
 
 **Preuve**
 
-Lorsque P<sub>i</sub> décide d'entrer en section critique, il ne peut exister dans le système qucun message *req* émis avant le sien, car P<sub>i</sub> a alors nécessairement reçu un message de tous les autres sites, et ces messages sont postérieurs à son message *req* grâce aux acquittements. En effet rappelons qu'entre deux sites les messages ne peuvent pas se dépasser par l'hypothèse de départ. Donc les demandes d'entrée en section critique sont bien traitées selon l'ordre total imposé par les estampilles de Lamport.
+Lorsque P<sub>i</sub> décide d'entrer en section critique, il ne peut exister dans le système qu'un message *req* émis avant le sien, car P<sub>i</sub> a alors nécessairement reçu un message de tous les autres sites, et ces messages sont postérieurs à son message *req* grâce aux acquittements. En effet rappelons qu'entre deux sites les messages ne peuvent pas se dépasser par l'hypothèse de départ. Donc les demandes d'entrée en section critique sont bien traitées selon l'ordre total imposé par les estampilles de Lamport.
 
 Un processus qui est en section critique ne détruit le message *req* qui se trouve dans les files des processus, et dont l'estampille empêche ceux-ci de pénétrer en section critique, que lorsqu'il sort de la section critique en émettant un message *rel*.
 
